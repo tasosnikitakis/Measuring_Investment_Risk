@@ -41,5 +41,9 @@ print(mean_comparisons)
 std_comparisons = sec_returns[["AMD", "NVDA"]].std() * 250 ** 0.5
 print(std_comparisons)
 
+# covariance and correlation
+AMD_var = sec_returns["AMD"].var()
+print(AMD_var)
+
 
 
