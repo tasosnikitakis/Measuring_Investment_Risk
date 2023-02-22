@@ -41,3 +41,5 @@ print(mean_comparisons)
 std_comparisons = sec_returns[["AMD", "NVDA"]].std() * 250 ** 0.5
 print(std_comparisons)
 
+
+
