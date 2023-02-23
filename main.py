@@ -9,11 +9,11 @@ import matplotlib.pyplot as plt
 
 
 #getting data
-tickers = ["AMD", "NVDA"]
+tickers = ["AMD", "NVDA", "MU"]
 
 sec_data = pd.DataFrame()
 for t in tickers:
-    sec_data[t] = pdr.get_data_yahoo(t, start = "2018-1-1")["Adj Close"]
+    sec_data[t] = pdr.get_data_yahoo(t, start = "2015-1-1")["Adj Close"]
 
 print(sec_data.tail())
 
@@ -63,4 +63,13 @@ print(cov_returns_matrix_annualized)
 corr_matrix = sec_returns.corr()
 print(corr_matrix)
 
+#Calculating portfolio risk
+weights_array = np.array([0.3, 0.3, 0.4])
+# portfolio variance calculation
+portfolio_var = np.dot(weights_array.T, np.dot(sec_returns.cov() * 250, weights_array))
+print(f"Portfolio variance is: {portfolio_var}")
+# portfolio volatility calculation
+portfolio_vol = np.dot(weights_array.T, np.dot(sec_returns.cov() * 250, weights_array)) ** 0.5
+portfolio_vol_rounded_percentaga = round(portfolio_vol *100, 2)
+print(f"Portfolio volatility is: {portfolio_vol_rounded_percentaga}%")
 
