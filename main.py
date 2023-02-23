@@ -73,3 +73,4 @@ portfolio_vol = np.dot(weights_array.T, np.dot(sec_returns.cov() * 250, weights_
 portfolio_vol_rounded_percentaga = round(portfolio_vol *100, 2)
 print(f"Portfolio volatility is: {portfolio_vol_rounded_percentaga}%")
 
+#Calculating 
