@@ -42,8 +42,25 @@ std_comparisons = sec_returns[["AMD", "NVDA"]].std() * 250 ** 0.5
 print(std_comparisons)
 
 # covariance and correlation
+# variance calculation using the numpy var function
 AMD_var = sec_returns["AMD"].var()
-print(AMD_var)
+print(f"AMD Variance: {AMD_var}")
+# annu8alized variance calculation
+AMD_var_annualized = sec_returns["AMD"].var() * 250
+print(f"AMD annualized variance: {AMD_var_annualized}")
 
+# covariance calculation
+cov_returns_matrix = sec_returns.cov()
+print(cov_returns_matrix)
+# Covariance matrix constructed using the cov() pandas dataframe method
+# the pandas.dataframe.cov() calculates the covariance of a pair of columns
+
+# Annualized covariance calculation
+cov_returns_matrix_annualized = sec_returns.cov() * 250
+print(cov_returns_matrix_annualized)
+
+# correlation matrix
+corr_matrix = sec_returns.corr()
+print(corr_matrix)
 
 
