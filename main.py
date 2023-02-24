@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 
 #getting data
-tickers = ["AMD", "NVDA", "MU"]
+tickers = ["AMD", "NVDA"]
 
 sec_data = pd.DataFrame()
 for t in tickers:
@@ -35,6 +35,21 @@ print(standard_deviation_AMD)
 standard_deviation_AMD_annualized = sec_returns["AMD"].std() * 250 ** 0.5
 print(standard_deviation_AMD_annualized)
 
+# NVDA mean and standard deviation calculation
+mean_NVDA = sec_returns["NVDA"].mean()
+# mean calculation by numpy
+print(mean_NVDA)
+# mean annualization
+mean_NVDA_annualized = sec_returns["NVDA"].mean() * 250
+print(mean_NVDA_annualized)
+# standard deviation calculation by numpy
+standard_deviation_NVDA = sec_returns["NVDA"].std()
+print(standard_deviation_NVDA)
+# standard deviation annualized
+standard_deviation_NVDA_annualized = sec_returns["NVDA"].std() * 250 ** 0.5
+print(standard_deviation_NVDA_annualized)
+
+
 # comparisons
 mean_comparisons = sec_returns[["AMD", "NVDA"]].mean() * 250
 print(mean_comparisons)
@@ -45,9 +60,16 @@ print(std_comparisons)
 # variance calculation using the numpy var function
 AMD_var = sec_returns["AMD"].var()
 print(f"AMD Variance: {AMD_var}")
-# annu8alized variance calculation
+# annualized variance calculation
 AMD_var_annualized = sec_returns["AMD"].var() * 250
 print(f"AMD annualized variance: {AMD_var_annualized}")
+# variance calculation using the numpy var function
+NVDA_var = sec_returns["NVDA"].var()
+print(f"NVDA Variance: {NVDA_var}")
+# annualized variance calculation
+NVDA_var_annualized = sec_returns["NVDA"].var() * 250
+print(f"NVDA annualized variance: {NVDA_var_annualized}")
+
 
 # covariance calculation
 cov_returns_matrix = sec_returns.cov()
@@ -64,13 +86,22 @@ corr_matrix = sec_returns.corr()
 print(corr_matrix)
 
 #Calculating portfolio risk
-weights_array = np.array([0.3, 0.3, 0.4])
+weights_array = np.array([0.5, 0.5])
 # portfolio variance calculation
 portfolio_var = np.dot(weights_array.T, np.dot(sec_returns.cov() * 250, weights_array))
-print(f"Portfolio variance is: {portfolio_var}")
+print(f"Portfolio variance is: {round(portfolio_var * 100, 2)}%")
 # portfolio volatility calculation
 portfolio_vol = np.dot(weights_array.T, np.dot(sec_returns.cov() * 250, weights_array)) ** 0.5
 portfolio_vol_rounded_percentaga = round(portfolio_vol *100, 2)
 print(f"Portfolio volatility is: {portfolio_vol_rounded_percentaga}%")
 
-#Calculating 
+#Calculating diversifiable and non diversifiable risk
+# Diversifiable risk calculation
+#Diversifiable risk = Portfolio Variance - Weighted Annual Variances of each stock
+weights = np.array([0.5, 0.5])
+dr = portfolio_var - (weights[0] ** 2 * AMD_var_annualized) - (weights[1] ** 2 * NVDA_var_annualized)
+print(f"Diversifiable portfolio risk is {str(round(dr*100, 3))}%")
+#Non Diversifiable risk calculation
+#Non Diversifiable risk = Portfolio Variance - Diversifiable risk
+ndr = portfolio_var - dr
+print(f"Non diversifiable portfolio risk is {str(round(ndr*100, 3))}%")
